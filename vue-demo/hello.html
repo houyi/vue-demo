@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>前端测试</title>
+    <script src="node_modules/vue/dist/vue.js"></script>
+    <style type="text/css">
+        div#box {
+            width: 100px;
+            height:100px;
+            /*字体的颜色*/
+            color: #ffffff;
+        }
+        .red {
+            background-color: blue;
+        }
+        .blue {
+            background-color: aqua;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <button @click="handClick">点我</button>
+    <br>
+    <!--vue基本使用-->
+    <h1>你好世界 {{name}} 非常帅！！！{{num}}</h1> <br>
+    <h1>你好世界<span v-text="name"></span> 非常帅！！！<span v-text="num"></span></h1> <br>
+    <h1>你好世界<span v-html="name"></span> 非常帅！！！<span v-html="num"></span></h1> <br>
+    <input type="text" v-model="num">
+    <button @click="num++">+</button>
+    <hr>
+
+    <!--v-model使用-->
+    <h1>传智播客的课程如下：</h1><br>
+    <input type="checkbox" v-model="lessons" value="java">Java <br>
+    <input type="checkbox" v-model="lessons" value="JavaEE">JavaEE <br>
+    <input type="checkbox" v-model="lessons" value="Android">Android <br>
+    <h1>您购买了一下课程：{{lessons.join(",")}}</h1>
+
+    <!--v-on 事件冒泡-->
+    <br>
+    <hr>
+    <div style="width:100px; height:100px; background-color: antiquewhite" @click.stop="print('div')">
+        div
+        <button @click.stop="print('btn')">点我试试</button>
+        <!--阻止事件跳转-->
+        <a href="www.baidu.com" @click.prevent="print('百度')">百度点我</a>
+    </div>
+
+    <!--v-for 循环遍历-->
+    <ul>
+        <!--数组遍历  :key="index" 提高渲染效率 指定唯一标识 for 加上条件 偶数-->
+        <!--v-if 和 v-else 中间不能有别的标签-->
+        <li v-for="(value,index) in users" :key="index">
+            <!--v-if 和 v-else 中间不能有别的标签 比如 br p-->
+            <span v-if="index %2 === 0">
+            {{index}} {{value.name +","+value.sex+","+value.age}}
+            </span>
+            <span v-else="" style="background-color: blue">
+                {{index}} {{value.name +","+value.sex+","+value.age}}
+            </span>
+        </li>
+
+    </ul>
+
+    <ul>
+        <!--对象遍历-->
+        <li v-for="(value,key,index) in users[0]">
+            {{value+","+key +","+ index}}
+        </li>
+    </ul>
+    <hr>
+    <!--v-if 真 true就渲染，假false 就不渲染页面-->
+    <button @click="show = !show">点我啊</button>
+    <br>
+    <!--show是隐藏 if 是直接干掉-->
+    <!--如果是频缓的切换 就用show-->
+    <span v-if="show">你好</span> <br>
+    <span v-show="show">你好</span>
+
+    <hr>
+    <!--v-bind 简写 ：改变html的自己的属性class 变成vue的自己的属性 就可以直接用 vue对象里面的变量了-->
+    <!--vue 里面的v-model v-on:事件= 后面可以直接跟属性，是vue自己的属性-->
+    <!--不是vue特有的属性 所以用bind 来绑定-->
+    <!--点击改变里面的变量属性的值-->
+    <button @click="color='red'">红色</button>
+    <button @click="color='blue'">蓝色</button>
+    <div id="box" :class="color">
+        div
+    </div>
+</div>
+
+<script>
+    var app = new Vue({
+        el: "#app",
+        data: {
+            name: "后羿",
+            num: 0,
+            lessons: [],
+            users: [
+                {name: "张三", sex: "男", age: 20},
+                {name: "李四", sex: "女", age: 21},
+                {name: "王五", sex: "男", age: 22},
+                {name: "赵六", sex: "女", age: 23}
+            ],
+            show: true,
+            //自定义一个变量
+            color: "red"
+        },
+        methods: {
+            handClick() {
+                console.log("hello")
+            },
+            print(msg) {
+                console.log(msg)
+            }
+        },
+        created() {
+            // 延迟一秒加载 箭头函数
+            setTimeout(() => this.name = "虎哥 真的", 1000);
+        }
+    });
+</script>
+
+</body>
+</html>
