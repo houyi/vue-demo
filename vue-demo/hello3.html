@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>子向父的通信</title>
+    <script src="node_modules/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <!--子组件-->
+    <!--子组件要改变父组件传过来的值，应该又父组件的方法改变 自定义事件改变-->
+    <!--父组件传递给子组件值   子组件在改变父的值-->
+    <counters :num="count" @increat="add" @unincreat="reduce"></counters>
+</div>
+
+<script>
+    //子组件 子组件往父组件 要先父组件改变才行
+    //click 自定义事件 会触发父组件的事件
+    const counters = {
+        template: `
+           <div>
+            <button @click="handleincreat">+</button>
+            <button @click="handleunincreat">-</button>
+           <h1> Nnm: {{num}}</h1>
+           </div>
+        `,
+        props: ['num'],
+        methods: {
+            handleincreat() {
+                //调用父组件的方法
+                this.$emit('increat');
+            },
+            handleunincreat() {
+                this.$emit('unincreat');
+            }
+        }
+    }
+
+
+    const app = new Vue({
+        el: "#app",
+        data: {
+            count: 0
+        },
+        components: {
+            //定义一个局部组件
+            counters: counters
+        },
+        methods: {
+            //定义2个方法 加减
+            add() {
+                this.count++;
+            },
+            reduce() {
+                this.count--;
+            }
+        }
+    });
+</script>
+</body>
+</html>
