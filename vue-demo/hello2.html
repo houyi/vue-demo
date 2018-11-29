@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>VUE组件开发</title>
+    <script src="node_modules/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <!--全局定义组件 然后 在 app 里面渲染-->
+    <counter></counter>
+    <!--组件之间的属性并没有共享-->
+    <counter></counter>
+    <!--data 用方法 返回 一个新的属性值-->
+    <counter></counter>
+
+    <hr>
+    <!--局部组件-->
+    <counterr></counterr>
+    <counterr></counterr>
+    <counterr></counterr>
+</div>
+
+
+<script>
+
+    //定义全局组件 组件开发 跟vue对象开发类似 定义在类上的 全局组件 任何一个页面都可以用它
+    //template 相当于 el 不跟页面绑定死 counter 是id
+    Vue.component("counter", {
+        //模板里面只能有一个根标签 div 里面
+        template: "<button @click='count++'>点我试试,点了我{{count}}次 ! </button>",
+        //组件data 必须要写成方法，并且返回一个 对象属性 这是跟下面的区别
+        //return 各个组件之间 并没有共享属性
+        data() {
+            return {
+                count: 0
+            }
+        }
+    })
+
+    // 局部组件就是一个对象 只能在 当前vue实例下用
+    const counterr = {
+        template: "<button @click='count++'>点我试试,点了我{{count}}次 ! </button>",
+        //组件data 必须要写成方法，并且返回一个 对象属性 这是跟下面的区别
+        //return 各个组件之间 并没有共享属性
+        data() {
+            return {
+                count: 0
+            }
+        }
+    }
+
+    //是跟页面绑定的el
+    var app = new Vue({
+        el: "#app",
+        data: {},
+        //组件，局部组件
+        components: {
+            //如果key 和 value值一样 可以简写 counterr 一个
+            counterr: counterr
+        }
+    });
+</script>
+</body>
+</html>
