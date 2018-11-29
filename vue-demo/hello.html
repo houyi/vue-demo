@@ -10,13 +10,15 @@
     <style type="text/css">
         div#box {
             width: 100px;
-            height:100px;
+            height: 100px;
             /*字体的颜色*/
             color: #ffffff;
         }
+
         .red {
             background-color: blue;
         }
+
         .blue {
             background-color: aqua;
         }
@@ -87,9 +89,12 @@
     <!--vue 里面的v-model v-on:事件= 后面可以直接跟属性，是vue自己的属性-->
     <!--不是vue特有的属性 所以用bind 来绑定-->
     <!--点击改变里面的变量属性的值-->
-    <button @click="color='red'">红色</button>
-    <button @click="color='blue'">蓝色</button>
-    <div id="box" :class="color">
+    <!--<button @click="color='red'">红色</button>-->
+    <!--<button @click="color='blue'">蓝色</button>-->
+    <!--<div id="box" :class="color">-->
+    <!--传一个对象 进行改变 boolean值-->
+    <button @click="isRead=!isRead">点我变</button>
+    <div id="box" :class="{red: isRead, blue: !isRead}">
         div
     </div>
 </div>
@@ -109,7 +114,9 @@
             ],
             show: true,
             //自定义一个变量
-            color: "red"
+            //color: "red"
+            // 自定义一个对象
+            isRead: true
         },
         methods: {
             handClick() {
