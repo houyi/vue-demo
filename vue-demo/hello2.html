@@ -19,6 +19,16 @@
     <counterr></counterr>
     <counterr></counterr>
     <counterr></counterr>
+    <hr>
+    <!--父子组件的通信 用v-bind 来绑定父亲的，然后传递给子组件-->
+    <!--把msg的属性 传给了 儿子的属性 title-->
+    <!--receivers  是 app 下面的 儿子类-->
+    <!--这是一个父到子传递的通信 title 属性可以自定义 -->
+    <receivers :title="message"></receivers>
+    <hr>
+    <!--父子数组之间的传递-->
+    <!--如果有大小写 可以用- 进行区分-->
+    <for-comptoent :items="lessons"></for-comptoent>
 </div>
 
 
@@ -50,14 +60,38 @@
         }
     }
 
+    //子组件 来接收  父组件传递过来的参数
+    const receivers = {
+        template: "<h1>{{title}}</h1>",
+        //给子组件定义一个属性 是一个数组可以穿多个属性
+        props: ['title']
+    }
+
+    // 复杂对象数组的父子之间传递
+    const forComptoent = {
+        template: "<ul><li v-for='item in items'>{{item}}</li></ul>",
+        //定义属性
+        props: ['items']
+    }
+
+
     //是跟页面绑定的el ee
     var app = new Vue({
         el: "#app",
-        data: {},
+        data: {
+            //父子通信 传递简单值
+            message: "我是父亲，给你传消息",
+            //传递一个数组
+            lessons: ['java', 'android', 'php']
+        },
         //组件，局部组件
         components: {
             //如果key 和 value值一样 可以简写 counterr 一个
-            counterr: counterr
+            counterr: counterr,
+            //父子之间传递通信 在父类定义一个组件
+            receivers: receivers,
+            //定义组件 传递
+            forComptoent: forComptoent
         }
     });
 </script>
