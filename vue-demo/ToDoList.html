@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="node_modules/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="inputValue"/>
+        <button @click="handleBtn">提交</button>
+        <ul>
+            <!--把data 里面的 list数组 遍历 v-for 循环遍历 可以循环数据-->
+            <li v-for="item in list">{{item}}</li>
+
+        </ul>
+    </div>
+
+    <script>
+        // 上面的 元素的input的数据值 跟data 里面的数据进行了绑定
+        //没有 修改dom元素
+        var app = new Vue({
+            el: '#app',
+            data:{
+                // 就是要循环的li 列表数组
+                // list: ['第一课内容','第二课内容']
+                list: [],
+                inputValue: '' // v-model 是一个双向绑定，当input 里面的数据发生变化的时候 data里面的 inputValue就会发生变化
+            },
+            //绑定事件方法
+            methods:{
+                handleBtn() {
+                    this.list.push(this.inputValue); // 就是把input 里面的数据，添加到数组里面
+                    //在把input 输入框置空
+                    this.inputValue = '';
+                }
+            }
+
+        });
+    </script>
+</body>
+</html>
