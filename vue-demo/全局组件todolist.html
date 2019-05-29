@@ -16,6 +16,7 @@
         <ul>
             <!--组件化的名字 里面子组件，绑定父组件的数据，item 遍历的是循环里面的 item数据-->
             <!--通过bind的写法，将content的变量传递给了todoitem 这个子组件-->
+            <!--动态地绑定一个或多个特性，或一个组件 prop 到表达式。-->
             <todo-item
                     v-bind:content="item"
                     v-for="item in list">
