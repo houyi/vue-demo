@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+
+</head>
+<body>
+<div id="app">
+    <div>
+        <input type="text" v-model="inputValue"/>
+        <button @click="handleBtn">提交</button>
+    </div>
+    <div>
+        <ul>
+            <!--组件化的名字 里面子组件，绑定父组件的数据，item 遍历的是循环里面的 item数据-->
+            <!--通过bind的写法，将content的变量传递给了todoitem 这个子组件-->
+            <!--动态地绑定一个或多个特性，或一个组件 prop 到表达式。-->
+            <!--@delete="handleDelBtn" @delete === v-on 监听子组件的 删除点击事件-->
+            <!--在父组件的模板当中，创建子组件的同时，也监听子组件的删除事件 @delete 事件-->
+            <!--一旦父组件监听的@delete 被监听，就会触发 父组件的 handleDelBtnFu 点击事件方法-->
+            <!-- v-bind:index="index" 向子组件传值传递一个索引-->
+            <!--  v-bind:content="item" 向子组件传值传递一个数据-->
+            <!--简写:content :index-->
+            <todo-item
+                    v-bind:content="item"
+                    v-bind:index="index"
+                    v-for="(item,index) in list">
+
+            </todo-item>
+        </ul>
+    </div>
+</div>
+<!--我们用组件的方式来进行重构-->
+
+<script>
+
+
+    //定义一个局部组件 定义一个对象
+    //子组件向父组件传值 给子组件一个点击事件@click 简写
+    // 可以通过$emit 方式 来进行子组件向父组件传值
+    //'content','index' 向子组件传递了 2个 数值
+    var TodoItem = {
+        //  父组件通过bind 给子组件进行传值 props 里面的 是bind 要接收的参数
+        props: ['content'],
+        template: "<li>{{content}}</li>",
+
+    };
+
+
+    //new 一个vue 实例化对象
+    var app = new Vue({
+        el: '#app',
+        data: {
+            list: [],
+            inputValue: ''
+        },
+        methods: {
+            handleBtn() {
+                this.list.push(this.inputValue);
+                this.inputValue = '';
+            }
+        },
+        //注册局部组件 把我们定义的局部组件对象注册进来
+        components: {
+            TodoItem: TodoItem
+        }
+    });
+</script>
+</body>
+</html>
