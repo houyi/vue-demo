@@ -22,6 +22,7 @@
             <!--一旦父组件监听的@delete 被监听，就会触发 父组件的 handleDelBtnFu 点击事件方法-->
             <!-- v-bind:index="index" 向子组件传值传递一个索引-->
             <!--  v-bind:content="item" 向子组件传值传递一个数据-->
+            <!--简写:content :index-->
             <todo-item
                     v-bind:content="item"
                     v-bind:index="index"
@@ -50,6 +51,7 @@
             handleDeItemZi() {
                 //$emit 的用法，它可以被 v-on 侦听 点击 handleDeItemZi 子组件的时候，可以监听index索引
                 //子组件就会拿到 this.index 索引值
+                //子组件触发事件，父组件正好在监听，监听就能获取到子组件带出来的内容 现实传值
                 this.$emit("delete", this.index);
             }
         }
