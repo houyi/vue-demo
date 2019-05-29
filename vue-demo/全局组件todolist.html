@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+
+</head>
+<body>
+<div id="app">
+    <div>
+        <input type="text" v-model="inputValue"/>
+        <button @click="handleBtn">提交</button>
+    </div>
+    <div>
+        <ul>
+            <!--组件化的名字 里面子组件，绑定父组件的数据，item 遍历的是循环里面的 item数据-->
+            <!--通过bind的写法，将content的变量传递给了todoitem 这个子组件-->
+            <todo-item
+                    v-bind:content="item"
+                    v-for="item in list">
+
+            </todo-item>
+        </ul>
+    </div>
+</div>
+<!--我们用组件的方式来进行重构-->
+
+<script>
+
+    //定义一个全局组件 第一个参数是组件名
+    //props 可以是数组或对象，用于接收来自父组件的数据
+    //如果子组件想用父组件传递过来的数据，一定要用props来进行一个接收
+    Vue.component("TodoItem", {
+        props: ['content'], //加单引号看做是一个字符串
+        template: "<li>{{content}}</li>" //模板里面要用差值表达式的方式来进行显示数据
+    });
+
+
+    //new 一个vue 实例化对象
+    var app = new Vue({
+        el: '#app',
+        data: {
+            list: [],
+            inputValue: ''
+        },
+        methods: {
+            handleBtn() {
+                this.list.push(this.inputValue);
+                this.inputValue = '';
+            }
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+
+</head>
+<body>
+<div id="app">
+    <div>
+        <input type="text" v-model="inputValue"/>
+        <button @click="handleBtn">提交</button>
+    </div>
+    <div>
+        <ul>
+            <!--组件化的名字 里面子组件，绑定父组件的数据，item 遍历的是循环里面的 item数据-->
+            <!--通过bind的写法，将content的变量传递给了todoitem 这个子组件-->
+            <todo-item
+                    v-bind:content="item"
+                    v-for="item in list">
+
+            </todo-item>
+        </ul>
+    </div>
+</div>
+<!--我们用组件的方式来进行重构-->
+
+<script>
+
+
+    //定义一个局部组件 定义一个对象
+    var TodoItem = {
+        props: ['content'],
+        template:"<li>{{content}}</li>"
+    };
+
+
+    //new 一个vue 实例化对象
+    var app = new Vue({
+        el: '#app',
+        data: {
+            list: [],
+            inputValue: ''
+        },
+        methods: {
+            handleBtn() {
+                this.list.push(this.inputValue);
+                this.inputValue = '';
+            }
+        },
+        //注册局部组件 把我们定义的局部组件对象注册进来
+        components: {
+            TodoItem:TodoItem
+        }
+    });
+</script>
+</body>
+</html>
