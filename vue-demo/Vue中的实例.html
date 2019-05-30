@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+</head>
+<body>
+
+    <div id="root">
+        <div @click="handleClick">
+            {{message}}
+        </div>
+
+        <!--组件实例-->
+        <item></item>
+    </div>
+<script>
+    //凡是以 $ 符号开头的都是vue的实例属性 或者实例方法 app.$data.message
+    //app.$destory() 内置方法销毁 vue实例
+    //一个vue的项目 只有很多vue的组件实例拼装组成的
+    //根实例 vue中的每一个组件 也是一个实例
+    // 定义一个 全局组件实例，就可以在根组件里面 使用这个组件实例
+    Vue.component('item', {
+        template:'<div>你好世界</div>'
+    });
+
+    var app = new Vue({
+        el: '#root', // #root 让我的这个vue实例对象 去接管 div id=root 标签里的这个dom的显示
+        data:{
+            message: 'hello world' //vue这个实例 就会到data里面寻找 对应的数据
+        },
+        methods:{ //因为vue这个实例接管了 这个dom，就会监听 这个dom里面的事件
+            handleClick() {//当这个div 被点击的时候，他就会自动的执行methods里面的方法 事件
+                alert('helloworld');
+            }
+        }
+    });
+</script>
+</body>
+</html>

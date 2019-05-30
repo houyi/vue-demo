@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+</head>
+<body>
+
+    <div id="app">
+
+    </div>
+    <script>
+        //生命周期函数，就是vue在某一个时间点会自动执行的函数
+        //没有template 属性的时候，会根据生命周期，把div里面的所有内容 当做模板进行渲染
+        //如果有template ，就会把这里面的进行渲染
+        var vm = new Vue({
+            el: '#app',//绑定div
+            // template:'<div>hello world</div>',
+            template: '<div>{{test}}</div>', // 这里面可以写差值表达式
+            data:{
+                test:'hello world'
+            },
+            beforeCreate() { //函数
+                console.log('beforeCreate');
+            },
+            created() {
+                console.log('created');
+            },
+            beforeMount() {
+                //这个函数执行的时候，页面还没有被渲染
+                //这时候helloworld 并没有渲染到页面上 mounted 的时候已经被渲染到页面上了
+                console.log(this.$el);
+                console.log('before mount');
+            },
+            mounted() {
+                console.log(this.$el);
+                console.log('mounted');
+            },
+            beforeDestroy() {
+                //还没有销毁之前
+                //当组件即将被销毁的时候回调用这个方法
+                console.log('befor destroy');
+            },
+            destroyed() {
+                //销毁之后
+                //当组件销毁了的时候，会调用这个方法
+                console.log('destroy');
+
+            },
+            beforeUpdate() {
+                //在重新 渲染之前执行的方法
+                console.log('before updata');
+            },
+            updated() {
+                //修改数据 渲染之后 就执行的方法
+                //vm.text = 'dell'
+                console.log('updated');
+            }
+        });
+    </script>
+</body>
+</html>

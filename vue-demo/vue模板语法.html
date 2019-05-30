@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+</head>
+<body>
+
+    <div id="app">
+        <!--第一种差值表达式-->
+        <div>{{name}}</div>
+        <div>{{name +' lee'}}</div>
+        <div>{{names}}</div>
+        <!--第二种v-text 模板语法 里面不是一个字符串 而是一个js表达式 -->
+        <div v-text="name"></div>
+        <div v-text="name +' lee'"></div>
+        <!--不会转义 h1 html标签-->
+        <div v-text="names"></div>
+        <!--他让div里面的html 内容 和 name进行一个绑定 里面不是一个字符串 而是一个js表达式-->
+        <div v-html="names + ' lee'"></div>
+    </div>
+
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data:{
+                name:'dell',
+                names:'<h1>dell</h1>'
+            }
+        });
+    </script>
+
+</body>
+</html>

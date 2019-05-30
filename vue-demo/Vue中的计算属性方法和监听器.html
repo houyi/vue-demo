@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <!--第一种写法 差值表达式-->
+    <div>{{fistName +' '+ lastName}}</div>
+    <!--第二种写法 computed 写一个 fullName 用计算属性，来解决冗余代码 -->
+    <div>{{fullName1}} ===={{age}}</div>
+    <!--第三种方式 用方法 也可以-->
+    <div>{{ fullName() }}</div>
+    <!--第四种方式 用watch来使用-->
+    <div>{{ fullName2 }}</div>
+</div>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            fistName: 'Dell',
+            lastName: 'lee',
+            age: 28,
+
+            //侦听器方式
+            fullName2: 'houyi'
+        },
+        //侦听器 去侦听 firstName 改变
+        //去侦听 data 里面的属性 的变化
+        // 也是有缓存的
+        watch: {
+            fistName() {
+                console.log('wacht计算了一次');
+                this.fullName2 = this.fistName + ' ' + this.lastName;
+            },
+            lastName() {
+                console.log('wacht计算了一次');
+                this.fullName2 = this.fistName + ' ' + this.lastName;
+            }
+        },
+        //变成了一个方法 来条用fullName 没有缓存 性能低
+        methods: {
+            fullName() {
+                console.log('方法计算了一次');
+                return this.fistName + ' ' + this.lastName;
+            }
+        },
+        //计算属性 将firstName 和lastName 结合起来 需求
+        // 是内置缓存的
+        computed: {
+            fullName1() { //是一个函数 将结果 返回
+                console.log('计算了一次');
+                //比如我们 app.age = 27 修改了属性，不会在执行计算一次的打印有缓存功能
+                return this.fistName + ' ' + this.lastName;
+            }
+        }
+    });
+</script>
+</body>
+</html>
