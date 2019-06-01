@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+</head>
+<body>
+
+<div id="root">
+
+    <!--一个divhelloword 点击一次变换颜色 -->
+    <!--数据改变样式就会变-->
+    <!--div标签上有一个元素class 它的名字是 activated 它显示不显示-->
+    <!--第3种方式 数组对象的数据绑定 -->
+    <!--:style 这是一个指定 后面一定时一个表达式-->
+    <!--styleObj 对象和样式绑定-->
+    <div @click="handleClick"
+         :style="styleObj">你好世界
+    </div>
+</div>
+<script>
+    // 数组赋值的方式 来进行判断
+    var root = new Vue({
+        el: '#root',
+        data: {
+            styleObj: { //绑定一个对象 默认是一个black
+                color: 'black'
+            }
+        },
+        methods: {
+            handleClick() {
+                //三元表达式
+                this.styleObj.color = this.styleObj.color === 'black' ? 'red' : 'black';
+
+            }
+        }
+    });
+</script>
+</body>
+</html>

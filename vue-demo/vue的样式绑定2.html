@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+    <style>
+        .activated {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+<div id="root">
+
+    <!--一个divhelloword 点击一次变换颜色 -->
+    <!--数据改变样式就会变-->
+    <!--div标签上有一个元素class 它的名字是 activated 它显示不显示-->
+    <!--第2种方式 数组对象的数据绑定 -->
+    <!--[activated,activatedOne] 可以在添加一个元素 ，这个 就可以在class元素中显示2个 -->
+    <div @click="handleClick"
+         :class="[activated]">你好世界
+    </div>
+</div>
+<script>
+    // 数组赋值的方式 来进行判断
+    var root = new Vue({
+        el: '#root',
+        data: {
+            activated: []
+        },
+        methods: {
+            handleClick() {
+                // 这段代码有点冗余 可以用一段代码进行 修改
+                // if (this.activated === 'activated') {
+                //     this.activated = ''; // 当显示出来的时候在置空
+                // } else {
+                //     this.activated = 'activated' //在点击 空的时候 在 赋值 字符串
+                // }
+
+                //用三目运算符 进行修改
+                this.activated = this.activated === 'activated' ? '' : 'activated';
+
+
+            }
+        }
+    });
+</script>
+</body>
+</html>

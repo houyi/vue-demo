@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+    <style>
+        .activated {
+            color:red;
+        }
+    </style>
+</head>
+<body>
+
+<div id="root">
+
+    <!--一个divhelloword 点击一次变换颜色 -->
+    <!--数据改变样式就会变-->
+    <!--div标签上有一个元素class 它的名字是 activated 它显示不显示-->
+    <!--取决于 isActivated 这个布尔变量是true或者是false-->
+    <!--isActivated 是一个数据 放在data里面-->
+    <!--第一种方式 叫做class的对象绑定 -->
+    <div @click="handleClick"
+         :class="{activated:isActivated}">你好世界
+    </div>
+</div>
+<script>
+
+    var root = new Vue({
+        el: '#root',
+        data:{
+            isActivated: false //不显示的意思
+        },
+        methods:{
+            handleClick() {
+                // this.isActivated = true;
+                this.isActivated = !this.isActivated;
+            }
+        }
+    });
+</script>
+</body>
+</html>
