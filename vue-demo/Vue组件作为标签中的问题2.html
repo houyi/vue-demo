@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <!--Vue不建议我们操作dom ，但是在复杂情况下 要操作dom-->
+    <!--这时候就用到了 ref 来引用操作dom-->
+    <!--给div 标签的引用ref 起一个名字-->
+    <!--这时候获取的是div 中的ref 如果是 组件中的 ref中怎么获取呢？-->
+    <div ref="hello" @click="handleClick"> hello world</div>
+
+    <!--组件中的ref 获取的是组件的引用-->
+    <!--点击子组件数字就会变化-->
+    <!--chang 事件 父组件就会监听子组件的 $emit数据改变事件-->
+    <!--一旦子组件通过$emit发出一个chang事件的时候，父组件就会监听到-->
+    <!--ref 必须写到 第一个 不然会报错-->
+    <item ref="one" @chang="handleChang"></item>
+    <item ref="tow" @chang="handleChang"></item>
+    <item ref="three" @chang="handleChang"></item>
+    <!--对上面item中的数字进行求和需求-->
+    <!--要想把子组件的数字相加，就在子组件中变化的时候，-->
+    <div>{{total}}</div>
+</div>
+
+<script>
+
+    Vue.component('item', {
+        template: '<div @click="handleItemClick">{{number}}</div>',
+        data() {
+            return {
+                number: 0
+            }
+        },
+        methods: {//子组件中的点击事件
+            handleItemClick() {
+                this.number++;
+                //当子组件被点击的时候，number 会加1 ，同时用$emit 会告诉外面触发一个事件
+                //名字是 chang .告诉外面说 我已经被改变了
+                //触发完事件 在哪里监听呢 父组件就可以在 子组件上监听你的chang事件
+                this.$emit('chang');
+            }
+        }
+    });
+
+    var app = new Vue({
+        el: '#app',
+        data: {
+            //在父组件中设置 总数为 0
+            total: 0
+        },
+        methods: {
+            handleClick() {
+                //上文dom中 我们定义了一个ref 这样在vue点击事件中 获取 helloworld 就是操作dom了
+                //被点击的时候，弹出helloworld
+                //this.$refs.hello 这个dom中所有的ref引用 有一个名字就hello
+                //hello 正好对应的就是这个div中的 dom内容 helloworld
+                alert(this.$refs.hello.innerHTML); //这样就拿到了 名字为hello引用的 innerhtml中的内容
+                console.log(this.$refs.hello.innerHTML); //打印出来dom中的内容
+            },
+            //这个方法是 父组件 监听到 子组件的数据改变的时候出发的方法
+            handleChang() {
+                alert('chang');
+                //这里就可以做求和的 运算 然后求和完毕 赋值给 total
+                //要想 操作子组件中的 数字运算就要操作dom ，这时候就要用到ref
+                //通过ref操作子组件中的dom 元素
+                //每一个子组件都有一个number的名字
+                console.log(this.$refs.one.number);
+                console.log(this.$refs.tow.number);
+                console.log(this.$refs.three.number);
+                //求和 ref 是标签对应的dom元素 可以操作dom里面的内容 进行相加
+                this.total = this.$refs.one.number + this.$refs.tow.number + this.$refs.three.number;
+            }
+        }
+    });
+</script>
+</body>
+</html>

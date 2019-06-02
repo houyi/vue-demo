@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+</head>
+<body>
+
+    <div id="app">
+        <table>
+            <tbody>
+                <!--tr is row 说明 tr是一个名字为row的全局组件-->
+                <!--如果直接写 <row></row> 标签在页面渲染就会出现问题bug-->
+                <!--这样写也就符合html5规范-->
+                <tr is="row"></tr>
+                <tr is="row"></tr>
+                <tr is="row"></tr>
+            </tbody>
+        </table>
+        <ul>
+            <li is="row"></li>
+            <li is="row"></li>
+            <li is="row"></li>
+            <li is="row"></li>
+        </ul>
+        <!--<select>-->
+            <!--<option is="row"></option>-->
+            <!--<option is="row"></option>-->
+            <!--<option is="row"></option>-->
+            <!--<option is="row"></option>-->
+        <!--</select>-->
+    </div>
+
+<script>
+
+    Vue.component('row',{
+        template:'<tr><td>hello world</td></tr>'
+    });
+
+    var app = new Vue({
+        el: '#app'
+    });
+</script>
+</body>
+</html>
