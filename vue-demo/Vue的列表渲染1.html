@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <!--渲染对象列表-->
+    <div v-for="(item,key,index) of listObj">
+            {{item}} ---{{key}}-----{{index}}
+
+    </div>
+
+</div>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            //如果想在对象列表里面 加一项数据的话
+            //可以通过引用的方式 来加数据 app.listObj = {name:'wwww',age:60,gende:'女'salay: 'swing',street:'beijing‘}
+            //做对象的循环
+            listObj:{
+                name: 'houyi',
+                age:28,
+                gender: '男',
+                salay: 'swing'
+            }
+        }
+    });
+</script>
+</body>
+</html>

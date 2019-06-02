@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+</head>
+<body>
+
+    <div id="app">
+        <!--v-if的意思是 是都将后面的值挂在到div 标签之上 true是挂在false是不挂载-->
+        <div v-if="show === 'a'">{{message}}</div>
+        <div v-else-if="show === 'b'">{{message1}}</div>
+        <!--if else 这2个必须 挨在一起来用不能分割 不然会报错-->
+        <!--上面 及不等于a 又不等于b  就走 bye-->
+        <div v-else>{{bye}}</div>
+
+    </div>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data:{
+          show:'a',
+            message:'hello world',
+            message1:'爱你一万年',
+            bye: '再见'
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+</head>
+<body>
+
+    <div id="app">
+        <!--v-if的意思是 是都将后面的值挂在到div 标签之上 true是挂在false是不挂载-->
+        <div v-if="show">{{message}}</div>
+        <!--if else 这2个必须 挨在一起来用不能分割 不然会报错-->
+        <div v-else>{{bye}}</div>
+
+
+        <!--区别 v-show 是已经渲染到页面上了 只是display:none 设置好成了 隐藏 性能会高一些-->
+        <div v-show="show">{{message}}</div>
+
+    </div>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data:{
+            message:'hello world',
+            bye:'再见',
+            show: false // 默认是false就是不显示
+        }
+    });
+</script>
+</body>
+</html>

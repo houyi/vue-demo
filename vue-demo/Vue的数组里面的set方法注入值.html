@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <!--修改数组的几种方式：-->
+    <!--1 修改数组的引用-->
+    <!--2 调用vue中的变异方法 pop push等-->
+    <!--3 第三种方式 用 Vue的对象实例 app.$set(app.listObj,1,5)-->
+    <!--4 第四种方式 Vue内置的set方法 Vue.set(app.listObj,1,5)-->
+    <!--渲染对象列表-->
+    <div v-for="(item,index) of listObj">
+        {{item}}-------- {{index}}
+
+    </div>
+
+</div>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            //如果想在对象列表里面 加一项数据的话
+           //增加修改数组的元素set方法 Vue.set(app.listObj,1,5) 改变数组上的 1个下标的数值
+            //第二种方式 app.$set(app.listObj,1,5)
+            listObj: [1, 2, 3, 4, 5, 56]
+        }
+    });
+</script>
+</body>
+</html>

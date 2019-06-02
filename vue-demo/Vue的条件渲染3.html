@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+</head>
+<body>
+
+    <div id="app">
+        <!--v-if的意思是 是都将后面的值挂在到div 标签之上 true是挂在false是不挂载-->
+        <!--为了清空 里面的 原来的数据，给当前的div 指定一个key 值，这样就可以指定哪个div标签-->
+
+        <div v-if="show">
+            <!--key指定唯一的-->
+            用户名： <input type="text"  key="username" />
+        </div>
+
+        <div v-else>
+            密码：<input type="password" key="password" />
+
+        </div>
+
+    </div>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data:{
+          show: false
+        }
+    });
+</script>
+</body>
+</html>

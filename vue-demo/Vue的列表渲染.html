@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <!--为了循环的性能给列表项 加一个唯一的key值-->
+    <!--:key="" 来作为唯一的值 带一个key值 提高性能-->
+    <!--vue 提供了 7个 操作数据的方法-->
+    <!--pop 删除 push 增加一条  shift 去除 unshift  加一掉 splice截取 操作数组 sort 排序 revsrse 取反-->
+    <!--splice(1,1,{id:003,text:33}) 从1 数组下标开始，增加1条，后面是数据-->
+    <!--app.list.splice(1,1,{id:'004',title:'aini'})-->
+    <!--还可以改变数组的引用，页面也会跟着改变 数据变了 页面也变了-->
+    <div v-for="(item,index) of list"
+         :key="item.id">
+        {{item}} ----{{index}}
+    </div>
+
+
+    <!--需求如果下面还有一个标签 还要循环的话 span 怎么解决重复循环呢-->
+    <!--就用到了 模板占位符 template 他可以包裹一些元素，在页面渲染的时候 并不会渲染到页面-->
+    <!--最外层的标签就显示了 template 比如是div 就可以不显示-->
+    <template v-for="(item,index) of list" :key="item.id">
+        <div>
+            {{item}} ----{{index}}
+        </div>
+        <span>
+            {{item.title}}
+        </span>
+    </template>
+</div>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            // list: ['hello', 'world', 'sihjie', 'aini']
+            //接收后端的接口 示例
+            list: [
+                {
+                    id: '001',
+                    title: '你好世界1'
+                },
+                {
+                    id: '002',
+                    title: '你好世界2'
+                },
+                {
+                    id: '003',
+                    title: '你好世界3'
+                }
+            ]
+        }
+    });
+</script>
+</body>
+</html>

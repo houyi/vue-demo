@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <!--渲染对象列表-->
+    <div v-for="(item,key,index) of listObj">
+        {{item}} ---{{key}}-----{{index}}
+
+    </div>
+
+</div>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            //如果想在对象列表里面 加一项数据的话
+            //vue中提供一个方法set方法 注入数据 Vue.set(app.listObj,'street','beijing')
+            // 还可以通过 vue的 实例方法 来增加数据 app.$set(app.listObj,'street','beijing')
+            //做对象的循环
+            listObj:{
+                name: 'houyi',
+                age:28,
+                gender: '男',
+                salay: 'swing'
+            }
+        }
+    });
+</script>
+</body>
+</html>
