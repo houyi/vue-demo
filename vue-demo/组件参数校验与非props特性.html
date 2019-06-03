@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>前端测试</title>
+    <script src="node_modules/vue/dist/vue.js"></script>
+
+</head>
+<body>
+<div id="app">
+    <!--父组件通过属性的形式传递数据-->
+    <!--加上冒号 就是传递的是数字-->
+    <!--:content="123"-->
+    <child content="hello world"></child>
+
+    <!--如果子组件里面没有传递content参数  就会使用默认值-->
+    <child></child>
+</div>
+
+<script>
+
+    //子组件
+    //props 特性 就是父组件 有一个属性content
+    //子组件 也声明了一个conetent 这样就一一对象的就是props特性
+    //非props 特性：父组件向子组件传递了一个属性content 但是子组件 并没有 props 的内容
+    // 非props 他的div 属性会展示出来
+    Vue.component('child', {
+        // props:['content'],//子组件接收父组件传递过来的参数
+        props: {
+            //组件参数的校验 复杂的校验
+            //如果想约束子组件的数据类型 就要写成{}对象的形式
+            // content: String
+            // content: [' String', 'Number'] 写到一个数字里面 可以接收 2个或者多个数据类型
+            // content: Number 接收的数据类型就是 数字
+            content: { //还可以是对象类型
+                type: String,
+                //必须传递的 类型 限制了
+                required: false,
+                // //默认值
+                default: 'default value',
+                //校验 你传递进去的参数 必须大于 5
+                validator(value) {
+                    return (value.length > 5);
+                }
+
+            }
+        },
+        template: '<div>{{content}}</div>'
+    });
+
+    //父组件
+    var app = new Vue({
+        el: "#app"
+
+    });
+</script>
+
+</body>
+</html>

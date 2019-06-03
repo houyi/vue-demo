@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!--自定义事件handleClick-->
+        <!--第一种 监听 原生事件写法-->
+        <child @click="handleClick"></child>
+
+        <!--第二种监听原生事件写法 监听的原生的点击事件-->
+        <!--这种写法 就可以不用写 子组件中的点击事件 和 $emit 来监听-->
+        <child @click.native="handleClick"></child>
+    </div>
+    <script>
+
+        Vue.component('child', {
+            // template:'<div">Hello world</div>', 如果想直接点击原生事件 就用第二种方法click.native
+            template:'<div @click="handleItemClick">Hello world</div>',
+            methods:{ //这才是真正的原生事件
+                handleItemClick() {
+                    alert('click item')
+                    this.$emit('click') // 这个是触发 自定义事件
+                }
+            }
+        });
+
+
+        var app = new Vue({
+            el: '#root',
+            methods:{ //在父组件里写的事件
+                handleClick() {
+                    alert('click')
+                }
+            }
+        });
+    </script>
+</body>
+</html>

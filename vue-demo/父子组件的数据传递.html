@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+</head>
+<body>
+
+
+<div id="app">
+    <!--父组件如何向子组件传递数据-->
+    <!--通过属性的形式 向子组件传递数据-->
+    <!--如果count不加冒号 传递给数据是一个字符串-->
+    <!--加上冒号:count 传递数据是一个数字-->
+    <!--父组件通过属性的形式 通过count 向子组件传递数据 子组件就要接收-->
+    <!--@chang 监听父组件的方法-->
+    <counter :count="0" @chang="handleObjClick"></counter>
+    <counter :count="1" @chang="handleObjClick"></counter>
+
+    <div>{{total}}</div>
+</div>
+<script>
+
+    //定义一个局部组件 子组件 通过props 来接收父组件传递过来的数据
+    var counter = {
+        props: ['count'], //子组件接收
+        data() {
+            return {
+                //子组件接收到父组件的count这个数据，把count复制了一份放置到了data里面
+                //用number 就可以了 克隆一个副本
+                number: this.count
+            }
+        },
+        template: '<div @click="handleClick">{{number}}</div>', // 就可以直接在模板里面使用 父组件传递过来的数据了
+        methods: {
+            handleClick() {
+                //父组件可以向子组件传递参数，但是子组件不能取修改父组件传递过来的参数
+                //子组件只能去用这个内容不能取修改这个内容
+                //单项数据流 一定要修改 就用副本来进行修改
+                // this.count++; 报错，不能直接修改
+                this.number = this.number + 1; //把count 复制了一份 传递了个number
+                //自增以后，传递给父组件 1 的参数 意思是 我发生了改变 我修改了 1
+                this.$emit('chang', 1);
+            }
+        }
+    };
+
+
+    //父组件
+    var app = new Vue({
+        el: '#app',
+        data: {
+            total: 1 //初始值为1 初始值 是父组件 2个 counter标签的和
+        },
+        components: {
+            //注册 子组件
+            counter: counter
+        }, methods: {
+            handleObjClick(step) { //这个step 就是 子组件向父组件发送数据的 this.$emit
+                //所带的参数 步长
+                //console.log(this.one.number.innerHTML + this.tow.number.innerHTML);
+                alert(step);
+                this.total += step;
+            }
+        }
+    });
+</script>
+</body>
+</html>
