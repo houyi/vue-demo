@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+</head>
+<body>
+    <!--使用插槽 父组件可以更方便的向子组件插入内容-->
+    <!--需求：当change点击的时候，一会One显示 一会two 显示-->
+<div id="app">
+    <child-one v-if="type === 'child-one'"></child-one>
+    <child-two v-if="type === 'child-two'"></child-two>
+    <button @click="handleClick">change</button>
+</div>
+<script>
+
+
+    //子组件
+    Vue.component('child-one', {
+
+        template: `<div>
+                    child-one
+                  </div>`
+    });
+
+    //子组件
+    Vue.component('child-two', {
+
+        template: `<div>
+                    child-two
+                  </div>`
+    });
+
+    var app = new Vue({
+        el: '#app',
+        data:{
+            type:'child-one'
+        },
+        methods:{
+            handleClick() {
+                this.type = (this.type === 'child-one' ? 'child-two' : 'child-one');
+            }
+        }
+    });
+</script>
+</body>
+</html>

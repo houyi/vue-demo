@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+</head>
+<body>
+    <!--使用插槽 父组件可以更方便的向子组件插入内容-->
+<div id="app">
+
+    <!--需求：子组件定义了一个 class=content的内容，但是想让父组件来加入 header 和 footer-->
+    <!--slot 显示的是 子组件里面的所有内容 就会显示header footer  2次-->
+    <!--可以用具名插槽 来解决 显示重复的 标签内容 slot="header" 指定一个名字   name="header" -->
+    <!--如果有多个 插槽 就可以使用具名插槽 来控制多个插槽-->
+    <bcontent>
+        <div class="header" slot="header">header</div>
+        <div class="footer" slot="footer">footer</div>
+    </bcontent>
+</div>
+<script>
+
+    //需求：子组件在template 之中 除了显示<P> 标签之外，还要展示其他标签内容
+    // 而这段内容不是子组件所决定的 而是父组件决定的.
+    //之前的做法是 父组件向子组件传递数据 用props 属性比如 content 来传递 加一个 {{}} 差值表达式 这样传递过来的，是
+    // 父组件如果是 <p>Lee</p> 会都显示在页面 做了一个转义p标签 如果不想做转义 可以用es6 语法 加一个v-html 就可以显示html标签
+
+    //子组件
+    Vue.component('bcontent', {
+        //标签模板==`` 两个顿号”的一个重要应用，就是过滤 HTML 字符串，防止用户输入恶意内容。
+        // solt 这个插槽的意思就是 显示的内容是什么？就是父组件向子组件之中 插入了一段p 标签html代码
+        //子组件的 加入插槽
+        //插槽如果加入了 默认内容，如果 子组件 <child></child> 中间不写内容，默认页面显示的就是 中间的默认内容
+        template: `<div>
+                    <slot name="header">头部heder</slot>
+                    <div class='content'>content</div>
+                    <slot name="footer">底部footer</slot>
+                </div>`
+    });
+
+    var app = new Vue({
+        el: '#app'
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+</head>
+<body>
+    <!--如果想要 里面的 html标签很多 都不要显示出来-->
+    <div id="app">
+        <child content="<p>Dell</p><p>Dell</p><p>Dell</p><p>Dell</p><p>Dell</p><p>Dell</p><p>Dell</p>"></child>
+    </div>
+<script>
+
+    //需求：子组件在template 之中 除了显示<P> 标签之外，还要展示其他标签内容
+    // 而这段内容不是子组件所决定的 而是父组件决定的.
+    //之前的做法是 父组件向子组件传递数据 用props 属性比如 content 来传递 加一个 {{}} 差值表达式 这样传递过来的，是
+    // 父组件如果是 <p>Lee</p> 会都显示在页面 做了一个转义p标签 如果不想做转义 可以用es6 语法 加一个v-html 就可以显示html标签
+
+    //子组件
+    Vue.component('child', {
+        props:['content'],
+        //标签模板==`` 两个顿号”的一个重要应用，就是过滤 HTML 字符串，防止用户输入恶意内容。
+        template:`<div><p>hello world</p>
+                    <div v-html="this.content"></div>
+                    </div>`
+    });
+
+    var app = new Vue({
+        el: '#app'
+    });
+</script>
+</body>
+</html>

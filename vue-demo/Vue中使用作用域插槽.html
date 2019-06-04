@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+</head>
+<body>
+<!--使用插槽 父组件可以更方便的向子组件插入内容-->
+<!--什么时候用 作用域插槽 就是子组件做循环 他的某一部分 是有外部传递进来的时候,就用作用域插槽-->
+<div id="app">
+    <child>
+        <!--告诉子组件 来怎么显示这个列表-->
+        <!--当子组件用slot的时候 会往slot 传递一个:item=item的数据-->
+        <!--这时候 里面的列表怎么显示的时候就不是有子组件来决定的-->
+        <!--而是由 父组件调用子组件的时候，给子组件传递对应的模板-->
+        <!--slot-scope 作用域-->
+        <!--父组件调用子组件的时候，给子组件设置了一个插槽 叫做作用域插槽-->
+        <!--作用域插槽 必须是一个 template 标签开头的定义-->
+        <!--同时要声明 我要从子组件接收的数据 都放在哪里 都放在props里面-->
+        <template slot-scope="props">
+                <!--比如：如果想渲染li标签-->
+                <!--就可以显示出来-->
+            <li>{{props.item}} --hello</li>
+            <h1>{{props.item}} --hello</h1>
+        </template>
+    </child>
+</div>
+<script>
+
+    // 需求：在子组件里面渲染一个列表 先添加一个data数据 list ,但是列表怎么循环不是有子组件决定，由外部的父组件来定义
+    // 这里列表组件 可能会在很多地方调用 在不同地方调用的时候
+    //这个列表怎么循环，这个列表的样式 不是 child子组件来决定的，而是外部告诉我们这个组件该怎么渲染
+    //子组件
+    Vue.component('child', {
+        data() { //数据
+            return {
+                list: [1, 2, 3, 4, 5]
+            }
+        },
+        template: `<div>
+                        <ul>
+
+                            <slot v-for="item of list" :item=item></slot>
+                        </ul>
+                  </div>`
+    });
+
+    var app = new Vue({
+        el: '#app'
+    });
+</script>
+</body>
+</html>

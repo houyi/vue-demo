@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+</head>
+<body>
+
+    <div id="app">
+        <!--需求：第一个Dell的组件 传递数据 到第二个Lee的传递数据-->
+        <!--这两个组件是兄弟关系,是非父子组件之间的关系-->
+        <child content="Dell"></child>
+        <child content="Lee"></child>
+
+
+    </div>
+<script>
+    // 2个组件之间的传值 通过bus总线 就连接起来了 发布订阅模式/观察者模式
+    //事件总线 来传递数据
+    //创建一个vue的 对象实例，在接下来创建 vue实例的时候 都会带有一个bus的属性
+    //在vue这个类上 挂了一个bus的属性 都是指向同一个vue的实例
+    Vue.prototype.bus = new Vue();
+
+    //子组件
+    Vue.component('child', {
+        props: { //接收父组件的数据
+            content: String
+        },
+        //[Vue warn]: Avoid mutating a prop directly since the value will
+        // 这样 在data里面 父组件就没有对content做任何的修改
+        //原因：在vue只有要有单项数据流，子组件不能改变父组件之间的内容 而现在却在 handleItemClick 方法里强改数据 就会报出警告了
+        data() {
+            return {
+                // 将content 做一个拷贝
+                selfContent: this.content
+            }
+        },
+        //子组件点击，要在子组件建立点击事件
+        template:'<div @click="handleItemClick">{{selfContent}}</div>',
+        methods:{
+            handleItemClick() {
+                //this.bus 就是vue 实例的bus 属性
+                // 通过这个emit 向外触发一个事件，第二个就是携带的一个数据就是content
+                // 触发外部一个事件，外部组件 就要监听 子组件发起的动作
+                this.bus.$emit('chang', this.selfContent);
+
+            }
+        },
+        //在这个生命周期上监听 bus的改变
+        mounted() {
+            var _this = this; // on 后面的 function() {} 作用域发生了变化 所以就保存一个this对象变量
+            //监听chang 事件 因为 bus是一个vue的实例，就会有on 这个点击事件的方法
+            this.bus.$on('chang',(msg)=>{ //后面参数 就是监听的内容
+                //为什么会弹出2次数据呢，因为在监听child组件的时候，会同监听上面2个child的事件
+                //就会弹出2次同一事件的监听
+                alert(msg);
+                _this.selfContent = msg;
+            });
+        }
+    });
+
+
+    var app = new Vue({
+        el: '#app'
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+</head>
+<body>
+    <!--使用插槽 父组件可以更方便的向子组件插入内容-->
+    <!--需求：当change点击的时候，一会One显示 一会two 显示-->
+<div id="app">
+    <!--动态组件 可以根据 is里面type 数据的变化 来进行切换 因为用了三目运算 type会变化-->
+    <componet :is="type"></componet>
+    <button @click="handleClick">change</button>
+</div>
+<script>
+
+
+    //子组件 v-once 组件 就不用再次创建或者删除 组件 可以有效的提高效率
+    Vue.component('child-one', {
+
+        template: `<div v-once>
+                    child-one
+                  </div>`
+    });
+
+    //子组件 v-once 组件 就不用再次创建或者删除 组件 可以有效的提高效率
+    Vue.component('child-two', {
+
+        template: `<div v-once>
+                    child-two
+                  </div>`
+    });
+
+    var app = new Vue({
+        el: '#app',
+        data:{
+            type:'child-one'
+        },
+        methods:{
+            handleClick() {
+                this.type = (this.type === 'child-one' ? 'child-two' : 'child-one');
+            }
+        }
+    });
+</script>
+</body>
+</html>
