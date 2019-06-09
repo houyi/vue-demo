@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+</head>
+
+<body>
+<div id="app">
+    <!--mode="out-in" transition 的过度属性-->
+    <!--动画组件的封装 用子组件的标签 传递一个:show 的 变量=父组件的show的变量-->
+    <!--使用封装好的动态组价动画效果-->
+   <fade :show="show">
+        <div>hello world</div>
+   </fade>
+
+    <fade :show="show">
+        <h1>hello world</h1>
+    </fade>
+    <button @click="handleClick">切换</button>
+</div>
+
+<script>
+
+
+    //动画的封装 把一个名字为fade的动画封装在了一个动态组件当中
+    //推荐用这种方式 来封装动画组件
+    Vue.component('fade', {
+        props: ['show'],
+        template: `
+        <transition name="fade"
+                @before-enter="handleBeforeEnter"
+                @enter="handleEnter"
+                @after-enter="handleAfterEnter">
+         <slot v-if="show"></slot>
+        </transition>`,
+        methods: {
+            handleBeforeEnter(el) {// el指的是 动画包裹的div标签  动画执行之前 还没有入场的时候
+                el.style.color = 'red';
+            },
+            handleEnter(el,done) {//接收2个参数 当beforenter触发后 就执行 enter 运行动画
+                setTimeout(() => {
+                    el.style.color = 'green';
+                }, 2000);
+
+                setTimeout(()=>{
+                    done(); //4秒之后 当done被调用之后 调用动画结束之后的事件
+                },4000)
+            },
+            handleAfterEnter(el) { //动画调用结束之后
+                el.style.color = '#000';
+            }
+        }
+    });
+
+    var app = new Vue({
+        el: '#app',
+        data: {
+            show: true
+        },
+        methods: {
+            handleClick() {
+                this.show = !this.show;
+            }
+        }
+    });
+
+</script>
+</body>
+</html>

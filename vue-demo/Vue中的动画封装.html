@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+</head>
+<style>
+
+    .fade-enter, .fade-leave-to {
+        opacity: 0;
+
+    }
+
+    .fade-enter-active, .fade-leave-active {
+        transition: opacity 1s;
+
+    }
+</style>
+<body>
+<div id="app">
+    <!--mode="out-in" transition 的过度属性-->
+    <!--动画组件的封装 用子组件的标签 传递一个:show 的 变量=父组件的show的变量-->
+    <!--使用封装好的动态组价动画效果-->
+   <fade :show="show">
+        <div>hello world</div>
+   </fade>
+
+    <fade :show="show">
+        <h1>hello world</h1>
+    </fade>
+    <button @click="handleClick">切换</button>
+</div>
+
+<script>
+
+
+    //动画的封装 把一个名字为fade的动画封装在了一个动态组件当中
+    Vue.component('fade', {
+        props: ['show'],
+        template: `
+        <transition name="fade">
+         <slot v-if="show"></slot>
+        </transition>`
+    });
+
+    var app = new Vue({
+        el: '#app',
+        data: {
+            show: true
+        },
+        methods: {
+            handleClick() {
+                this.show = !this.show;
+            }
+        }
+    });
+
+</script>
+</body>
+</html>
