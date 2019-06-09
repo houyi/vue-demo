@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+    <style>
+
+        .fade-enter, .fade-leave-to {
+            opacity: 0;
+
+        }
+
+        .fade-enter-active, .fade-leave-active {
+            transition: opacity 1s;
+
+        }
+    </style>
+</head>
+<body>
+
+<div id="app">
+    <!--mode="out-in" transition 的过度属性-->
+    <transition name="fade" mode="out-in">
+        <!--自定义 动态组件 来实现动画过渡-->
+        <!--type 默认的值是 child-->
+        <component :is="type">
+
+        </component>
+    </transition>
+    <button @click="handleClick">切换</button>
+</div>
+
+<script>
+    //子组件 2个
+    Vue.component('child', {
+        template: '<div>hello world1</div>'
+    });
+
+    Vue.component('child-one', {
+        template: '<div>bey world1</div>'
+    });
+
+    var app = new Vue({
+        el: '#app',
+        data: {
+            //type 默认的值是child
+            type: 'child'
+        },
+        methods: {
+            handleClick() {
+                this.type = this.type === 'child' ? 'child-one' : 'child';
+            }
+        }
+    });
+</script>
+</body>
+</html>
