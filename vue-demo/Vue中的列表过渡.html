@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+</head>
+<style>
+
+    .fade-enter, .fade-leave-to {
+        opacity: 0;
+
+    }
+
+    .fade-enter-active, .fade-leave-active {
+        transition: opacity 1s;
+
+    }
+</style>
+<body>
+<div id="app">
+    <!--如果能不用index做为key 就不用 因为会有性能的下降-->
+    <!--<div v-for="(item, index) of list" :key="index">-->
+    <!--{{item.index}}-->
+    <!--</div>-->
+
+    <!--修改后的方法-->
+    <!--每点击一个增加 就会增加一个数据-->
+    <!--需求 ：多一个数组列表实现一个过渡的效果-->
+    <!--transition-group 来对列表做一个动画-->
+    <transition-group name="fade">
+        <div v-for="item of list" :key="item.id">
+            {{item.title}}
+        </div>
+    </transition-group>
+
+
+    <button @click="handleClick">切换</button>
+</div>
+
+<script>
+
+    var count = 0; //计数器
+
+    var app = new Vue({
+        el: '#app',
+        data: {
+            list: []
+        },
+        methods: {
+            handleClick() {
+                this.list.push({ //往数组中增加数据
+                    id: count++,
+                    title: 'hello world'
+                })
+            }
+        }
+    });
+
+</script>
+</body>
+</html>
