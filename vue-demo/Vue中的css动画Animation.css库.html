@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+</head>
+<style>
+    /*当百分之0 的时候 50 100*/
+    /*我们不想手动写动画效果了 用anitmate.css动画库*/
+    @keyframes bounce-in {
+        0% {
+            transform: scale(0);
+        }
+        50% {
+            /*1.5 倍*/
+            transform: scale(1.5);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+
+    /*.fade-enter-active {*/
+        /*transform-origin: left center;*/
+        /*animation: bounce-in 1s;*/
+    /*}*/
+
+    /*!*当离开的时候让这个动画反向执行*!*/
+    /*.fade-leave-active {*/
+        /*transform-origin: left center;*/
+        /*animation: bounce-in 1s reverse;*/
+    /*}*/
+
+
+    /*自定义动画名字*/
+    .active {
+        transform-origin: left center;
+        animation: bounce-in 1s;
+    }
+
+    /*当离开的时候让这个动画反向执行*/
+    .leave {
+        transform-origin: left center;
+        animation: bounce-in 1s reverse;
+    }
+
+</style>
+<body>
+<!--加上transition 以后，这个组件会自动的加动画动画 会在div 便签上生成2个class文件 来控制动画-->
+<!--一个class是 fade-enter 一个是 fade-enter-active-->
+<!--vue的动画 是在某一时刻，自动的往标签上 添加class 动画样式的效果-->
+<div id="app">
+    <!--如果不写name 默认的显示名字是 v -->
+    <!--enter-active-class="active" 自定义别名的 动画名字 就可以不用默认的名字-->
+    <!--leave-active-class="leave" 自定义别名的 动画名字 就可以不用默认的名字-->
+    <transition name="fade"
+                enter-active-class="active"
+                leave-active-class="leave">
+        <div v-if="show">hello world</div>
+    </transition>
+
+    <button @click="handleClick">点击</button>
+</div>
+
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            show: true
+        },
+        methods: {
+            handleClick() {
+                this.show = !this.show;
+            }
+        }
+    });
+</script>
+</body>
+</html>

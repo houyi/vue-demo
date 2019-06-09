@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+</head>
+<style>
+    /*显示时候过度*/
+    .fade-enter,
+    .fade-leave-to {
+        opacity: 0;
+    }
+
+    .fade-enter-active,
+    .fade-leave-active {
+        transition: opacity 1s;
+    }
+
+</style>
+<body>
+<!--加上transition 以后，这个组件会自动的加动画动画 会在div 便签上生成2个class文件 来控制动画-->
+<!--一个class是 fade-enter 一个是 fade-enter-active-->
+<!--vue的动画 是在某一时刻，自动的往标签上 添加class 动画样式的效果-->
+<div id="app">
+    <!--如果不写name 默认的显示名字是 v -->
+    <transition name="fade">
+        <div v-if="show">hello world</div>
+    </transition>
+
+    <button @click="handleClick">点击</button>
+</div>
+
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            show: true
+        },
+        methods: {
+            handleClick() {
+                this.show = !this.show;
+            }
+        }
+    });
+</script>
+</body>
+</html>

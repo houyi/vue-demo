@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+    <link rel="stylesheet" type="text/css" href="./node_modules/animate.css/animate.css" >
+</head>
+<style>
+    /*显示时候过度*/
+    .fade-enter,
+    .fade-leave-to {
+        opacity: 0;
+    }
+
+    .fade-enter-active,
+    .fade-leave-active {
+        transition: opacity 1s;
+    }
+</style>
+<body>
+
+<div id="app">
+    <!--如果不写name 默认的显示名字是 v -->
+    <!--同时使用过度和动画库-->
+    <!--appear-->
+    <!--appear-active-class="animated bounce" 第一次就有动画效果-->
+    <!--type="transition" 如果 动画的时间 不一样 一个少 一个多-->
+    <!--既可以加过度 也可以加CSS动画-->
+    <!--:durtion="10000" 设置这个时长就是动画class 被移除  自定义动画的时长-->
+    <transition name="fade"
+                :duration="10000"
+                type="transition"
+                appear
+                leave-active-class="animated bounce fade-enter-active"
+                enter-active-class="animated swing fade-leave-active"
+                appear-active-class="animated bounce">
+
+        <div v-if="show">hello world</div>
+    </transition>
+
+    <button @click="handleClick">点击</button>
+</div>
+
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            show: true
+        },
+        methods: {
+            handleClick() {
+                this.show = !this.show;
+            }
+        }
+    });
+</script>
+</body>
+</html>
